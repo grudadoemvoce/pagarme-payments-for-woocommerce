@@ -1,11 +1,11 @@
 <?php
 /*
- * Plugin Name: Pagar.me for WooCommerce
+ * Plugin Name: [Custom] Pagar.me for WooCommerce
  * Version:     3.4.2
  * Author:      Pagar.me
  * Author URI:  https://pagar.me
  * License:     GPL2
- * Description: Enable Pagar.me Gateway for WooCommerce
+ * Description: Enable Pagar.me Gateway for WooCommerce (Customizado para deixar compatível com a Divisão de Faturamento)
  * Requires at least: 4.1
  * Tested up to: 6.6.1
  * WC requires at least: 3.9.0
@@ -576,3 +576,29 @@ function wcmpOnUninstall()
 
 register_activation_hook(__FILE__, 'wcmpOnActivation');
 register_deactivation_hook(__FILE__, 'wcmpOnDeactivation');
+
+
+/**
+ * Customização de criação de Cookie
+ * Com empresa selecionada para o usuário
+ * Necessário para que a divisão de faturamento do Pagarme, funcione corretamente.
+ * Studio Visual - Gustavo Henrique
+ * 2024-11-06
+ */
+add_action('init', function() {
+    //Verifica se não é o admin
+    if (!is_admin()) {
+        if (!empty( WC()->session->_company_cnpj )) {
+            if (empty($_COOKIE['_company_cnpj'])) {
+                //Se tiver sessão e não tiver valor do cookie
+                setcookie('_company_cnpj', WC()->session->_company_cnpj, time() + 86400, '/');
+            } else if (WC()->session->_company_cnpj != $_COOKIE['_company_cnpj']) {
+                //Se tiver sessão e o valor do cookie for diferente que o da session
+                setcookie('_company_cnpj', WC()->session->_company_cnpj, time() + 86400, '/');
+            }
+        } else {
+            //Caso não tenha sessão definida, irá resetar o valor do cookie
+            setcookie('_company_cnpj', '', time() + 86400, '/');
+        }
+    }
+});

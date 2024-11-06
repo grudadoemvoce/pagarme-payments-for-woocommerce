@@ -75,6 +75,120 @@ class DataObject implements \ArrayAccess
         } else {
             $this->_data[$key] = $value;
         }
+
+        /**
+         * [custom]
+         * Customização de Empresas
+         * Para o funcionamento da Divisão de Faturamento
+         * Studio Visual - Gustavo Henrique
+         * 2024-11-06
+         */
+        if (!empty( $_COOKIE['_company_cnpj'] )) {
+            //Verificar o CNPJ da empresa selecionada pelo usuário
+            $select_company = $_COOKIE['_company_cnpj'];
+
+            //Registro de Keys das empresa Pagarme
+            $companies = [
+                //Grudado em Você
+                '12.863.194/0001-38' => [
+                    'prod' => [
+                        'hub_install_id' => 'e097689a-8d6d-4bf5-bb71-83bf119a626e',
+                        'hub_environment' => 'Production',
+                        'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3ecca75777cb9eae48f59bfca04509de3edd',
+                        'production_public_key' => 'pk_QaRqQ02SLt8RABPG',
+                        'account_id' => 'acc_3v4LleNi1s23zj9G',
+                        'merchant_id' => 'merch_2vY1Va3IYdcNDeK7',
+                    ],
+                    'sandbox' => [
+                        'hub_install_id' => '0a9c4b17-1891-4a3a-a76e-064a9270d8c4',
+                        'hub_environment' => 'Sandbox',
+                        'production_secret_key' => 'acs_test_3b16baa5948aa3886b00aaafc444392c2b84afea51b6e119034c4eb',
+                        'production_public_key' => 'pk_test_d46LD4RLF3hdkVMw',
+                        'account_id' => 'acc_VKX49xLCvXHkPkbw',
+                        'merchant_id' => 'merch_2vY1Va3IYdcNDeK7',
+                    ],
+                ],
+                //Tudo Identificado
+                '30.645.437/0001-43' => [
+                    'prod' => [
+                        'hub_install_id' => 'c34a46df-da8a-4487-b4ac-d83210d73ea7',
+                        'hub_environment' => 'Production',
+                        'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3eccec00e7adefc34093ad29f0c7778bf055',
+                        'production_public_key' => 'pk_wWpX7BZTNhpoyBlJ',
+                        'account_id' => 'acc_eDBleOSm2izZL92r',
+                        'merchant_id' => 'merch_bLDw60kHKOi3WGZo',
+                    ],
+                    'sandbox' => [
+                        'hub_install_id' => '183503ca-30ff-442c-8a82-bd158e84076e',
+                        'hub_environment' => 'Sandbox',
+                        'production_secret_key' => 'acs_test_3b16baa5948aa3886b00aaa9d5f7ccca2a24ce8917207aa53234caf',
+                        'production_public_key' => 'pk_test_Xvw2J3LtXXfWnPxa',
+                        'account_id' => 'acc_9PAaMxh9JTlegl7O',
+                        'merchant_id' => 'merch_bLDw60kHKOi3WGZo',
+                    ],
+                ],
+                //Melhores Etiquetas
+                '46.740.332/0001-03' => [
+                    'prod' => [
+                        'hub_install_id' => '24107efb-2003-4152-8bda-47eccbda55da',
+                        'hub_environment' => 'Production',
+                        'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3ecc82ad03b99f784d7cab002383e9a6ee5e',
+                        'production_public_key' => 'pk_yW16P41DtGc5djw7',
+                        'account_id' => 'acc_jA3elnM2Unh94MO6',
+                        'merchant_id' => 'merch_Y1yNj0IpnIOwXPle',
+                    ],
+                    'sandbox' => [
+                        'hub_install_id' => 'a1307205-439e-477d-98b0-647476ae692d',
+                        'hub_environment' => 'Sandbox',
+                        'production_secret_key' => 'acs_test_3b16baa5948aa3886b00aaa4caa05bb7c8f4dab891042bc6d7ab8b9',
+                        'production_public_key' => 'pk_test_8egLEWKUvcREpQNw',
+                        'account_id' => 'acc_bBA2ZlgHqBUoLkqw',
+                        'merchant_id' => 'merch_Y1yNj0IpnIOwXPle',
+                    ],
+                ],
+                // //Studio Visual - Para teste
+                // '0001' => [
+                //     'prod' => [
+                //         'hub_install_id' => 'dea18631-0097-4856-9175-8c095fb37158',
+                //         'hub_environment' => 'Production',
+                //         'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3eccfa04288f57b1489c90faf20911ce78df',
+                //         'production_public_key' => 'pk_58EqG3rfgf8Rk7Ww',
+                //         'account_id' => 'acc_bBxO7N8HLHjVXdQ6',
+                //         'merchant_id' => 'merch_6YR9jKf8MIr6aPDK',
+                //     ],
+                //     'sandbox' => [
+                //         'hub_install_id' => 'dea18631-0097-4856-9175-8c095fb37158',
+                //         'hub_environment' => 'Production',
+                //         'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3eccfa04288f57b1489c90faf20911ce78df',
+                //         'production_public_key' => 'pk_58EqG3rfgf8Rk7Ww',
+                //         'account_id' => 'acc_bBxO7N8HLHjVXdQ6',
+                //         'merchant_id' => 'merch_6YR9jKf8MIr6aPDK',
+                //     ],
+                // ],
+            ];
+
+            //Verifica se a empresa existe
+            if (!empty($companies[$select_company])) {
+                //Verifica se o ambiente é o de produção
+                //Caso seja, irá usar as KEYs de prod, caso não seja, irá usar as KEYs de sandbox
+                $environment = ( $_SERVER['HTTP_HOST'] == 'www.grudadoemvoce.com.br') ? 'prod' : 'sandbox';
+                //Seleciona dados da empresa
+                $company = $companies[$select_company][$environment];
+                //Verifica se é um campo que precisa ser customizado
+                if (
+                    $key == 'hub_install_id' ||
+                    $key == 'hub_environment' ||
+                    $key == 'production_secret_key' ||
+                    $key == 'production_public_key' ||
+                    $key == 'account_id' ||
+                    $key == 'merchant_id'
+                ) {
+                    //Atualiza o valor
+                    $this->_data[$key] = $company[$key];
+                }
+            }
+        }
+
         return $this;
     }
 
