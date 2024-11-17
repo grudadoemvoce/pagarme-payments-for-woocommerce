@@ -146,26 +146,34 @@ class DataObject implements \ArrayAccess
                         'merchant_id' => 'merch_Y1yNj0IpnIOwXPle',
                     ],
                 ],
-                // //Studio Visual - Para teste
-                // '0001' => [
-                //     'prod' => [
-                //         'hub_install_id' => 'dea18631-0097-4856-9175-8c095fb37158',
-                //         'hub_environment' => 'Production',
-                //         'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3eccfa04288f57b1489c90faf20911ce78df',
-                //         'production_public_key' => 'pk_58EqG3rfgf8Rk7Ww',
-                //         'account_id' => 'acc_bBxO7N8HLHjVXdQ6',
-                //         'merchant_id' => 'merch_6YR9jKf8MIr6aPDK',
-                //     ],
-                //     'sandbox' => [
-                //         'hub_install_id' => 'dea18631-0097-4856-9175-8c095fb37158',
-                //         'hub_environment' => 'Production',
-                //         'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3eccfa04288f57b1489c90faf20911ce78df',
-                //         'production_public_key' => 'pk_58EqG3rfgf8Rk7Ww',
-                //         'account_id' => 'acc_bBxO7N8HLHjVXdQ6',
-                //         'merchant_id' => 'merch_6YR9jKf8MIr6aPDK',
-                //     ],
-                // ],
             ];
+
+            /**
+             * Apenas para TESTES em homologação
+             * Caso não seja o ambiente de produção, irá habilitar a opção de teste da Studio Visual
+             * Com essa opção, é possível testar o PIX e cartão de crédito com a versão de produção
+             */
+            if ($_SERVER['HTTP_HOST'] != 'www.grudadoemvoce.com.br') {
+                //Studio Visual - Para teste
+                $companies['0001'] = [
+                    'prod' => [
+                        'hub_install_id' => 'dea18631-0097-4856-9175-8c095fb37158',
+                        'hub_environment' => 'Production',
+                        'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3eccfa04288f57b1489c90faf20911ce78df',
+                        'production_public_key' => 'pk_58EqG3rfgf8Rk7Ww',
+                        'account_id' => 'acc_bBxO7N8HLHjVXdQ6',
+                        'merchant_id' => 'merch_6YR9jKf8MIr6aPDK',
+                    ],
+                    'sandbox' => [
+                        'hub_install_id' => 'dea18631-0097-4856-9175-8c095fb37158',
+                        'hub_environment' => 'Production',
+                        'production_secret_key' => 'acs_666666c500ac43dbadb8d89f3eccfa04288f57b1489c90faf20911ce78df',
+                        'production_public_key' => 'pk_58EqG3rfgf8Rk7Ww',
+                        'account_id' => 'acc_bBxO7N8HLHjVXdQ6',
+                        'merchant_id' => 'merch_6YR9jKf8MIr6aPDK',
+                    ],
+                ];
+            }
 
             //Verifica se a empresa existe
             if (!empty($companies[$select_company])) {

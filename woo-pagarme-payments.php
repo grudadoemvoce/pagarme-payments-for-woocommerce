@@ -2,7 +2,7 @@
 /*
  * Plugin Name: [Custom] Pagar.me for WooCommerce
  * Version:     3.4.2
- * Author:      Pagar.me
+ * Author:      Pagar.me (edit: Studio Visual)
  * Author URI:  https://pagar.me
  * License:     GPL2
  * Description: Enable Pagar.me Gateway for WooCommerce (Customizado para deixar compatível com a Divisão de Faturamento)
@@ -579,6 +579,7 @@ register_deactivation_hook(__FILE__, 'wcmpOnDeactivation');
 
 
 /**
+ * [custom]
  * Customização de criação de Cookie
  * Com empresa selecionada para o usuário
  * Necessário para que a divisão de faturamento do Pagarme, funcione corretamente.
