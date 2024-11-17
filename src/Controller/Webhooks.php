@@ -42,7 +42,19 @@ class Webhooks
         }
 
         if (strpos($event, 'charge') !== false) {
-            update_post_meta($body->data->code, "webhook_{$event}_{$body->id}", true);
+            /**
+             * [custom]
+             * Para deixar compatível com a versão do HPOS
+             * Studio Visual - Gustavo Henrique
+             * 2024-11-06
+             */
+            //Não compatível com o HPOS
+            //update_post_meta($body->data->code, "webhook_{$event}_{$body->id}", true);
+            //Compatível com o HPOS
+            $order = wc_get_order($body->data->code);
+            $order->update_meta_data("webhook_{$event}_{$body->id}", true);
+            $order->save();
+
             do_action("on_pagarme_{$event}", $body);
             do_action("on_pagarme_notes_{$event}", $body);
             return;
@@ -56,7 +68,18 @@ class Webhooks
 
         $order = new Order($order_id);
 
-        update_post_meta($order_id, "webhook_{$event}_{$body->id}", true);
+        /**
+         * [custom]
+         * Para deixar compatível com a versão do HPOS
+         * Studio Visual - Gustavo Henrique
+         * 2024-11-06
+         */
+        //Não compatível com o HPOS
+        //update_post_meta($order_id, "webhook_{$event}_{$body->id}", true);
+        //Compatível com o HPOS
+        $order->update_meta_data("webhook_{$event}_{$body->id}", true);
+        $order->save();
+
         do_action("on_pagarme_{$event}", $order, $body);
     }
 
@@ -88,7 +111,17 @@ class Webhooks
     }
     public function was_sent($event_name, $event_id, $order_id)
     {
-        $value = get_post_meta($order_id, "webhook_{$event_name}_{$event_id}", true);
+        /**
+         * [custom]
+         * Para deixar compatível com a versão do HPOS
+         * Studio Visual - Gustavo Henrique
+         * 2024-11-06
+         */
+        //Não compatível com o HPOS
+        //$value = get_post_meta($order_id, "webhook_{$event_name}_{$event_id}", true);
+        //Compatível com o HPOS
+        $order = wc_get_order($order_id);
+        $value = $order->get_meta("webhook_{$event_name}_{$event_id}");
 
         return $value ? true : false;
     }
