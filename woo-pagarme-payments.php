@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: [Custom] Pagar.me for WooCommerce
- * Version:     3.4.2
+ * Version:     3.5.0
  * Author:      Pagar.me (edit: Studio Visual)
  * Author URI:  https://pagar.me
  * License:     GPL2
@@ -219,7 +219,6 @@ function wcmpAdminNoticeCheckoutFields()
     }
 
     WC()->session = new WC_Session_Handler;
-    WC()->customer = new WC_Customer;
     $billingFields = WC()->checkout->get_checkout_fields()['billing'];
 
     $missingFields = [];
