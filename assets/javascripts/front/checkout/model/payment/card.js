@@ -11,6 +11,7 @@ let pagarmeCard = {
     valueTarget: 'input[data-pagarme-element="order-value"]',
     installmentsTarget: '[data-pagarme-component="installments"]',
     installmentsInfoTarget: '[data-pagarme-component="installments-info"]',
+    maskTargets: 'input[class*="pagarme-card-form"][data-mask]',
     mundiCdn: 'https://cdn.mundipagg.com/assets/images/logos/brands/png/',
     tokenElement: '[data-pagarme-element="token"]',
     fieldsetCardElements: 'fieldset[data-pagarmecheckout="card"]',
@@ -434,7 +435,7 @@ let pagarmeCard = {
     },
     canExecute: function (event) {
         const checkoutPaymentElement = pagarmeCard.getCheckoutPaymentElement();
-        
+
         const cardBrand = checkoutPaymentElement.parents('.pagarme-card-number-row')
             .find(this.brandTarget);
         if (cardBrand?.val()?.length === 0 || wc_pagarme_checkout.errorTokenize === true) {
@@ -475,6 +476,7 @@ let pagarmeCard = {
     addEventListener: function () {
         jQuery(document.body).on('updated_checkout', function () {
             pagarmeCard.renewEventListener();
+            jQuery.applyDataMask(pagarmeCard.maskTargets);
             let creditCardField = jQuery(pagarmeCard.cardNumberTarget);
             creditCardField.each(function () {
                 if (jQuery(this)?.val() && pagarmeCard.isVisible(jQuery(this)[0])) {

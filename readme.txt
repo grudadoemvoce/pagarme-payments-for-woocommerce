@@ -4,7 +4,7 @@ Tags: payment, pagarme, ecommerce, brasil, woocommerce
 Requires at least: 4.1
 Tested up to: 6.5.5
 Requires PHP: 7.1
-Stable tag: 3.4.2
+Stable tag: 3.5.0
 License: MIT
 License URI: https://github.com/pagarme/woocommerce/blob/master/LICENSE
 
@@ -25,24 +25,25 @@ Nosso processo de instalação é simples e bem detalhado:
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
 
-👻 3.4.2 (31/10/2024) 👻
-Você pode conferir essas atualizações aqui: [Github](https://github.com/pagarme/woocommerce/releases/tag/3.4.2)
+= 3.5.0 (10/02/2025) =
+Você pode conferir essas atualizações aqui: [Github](https://github.com/pagarme/woocommerce/releases/tag/3.5.0)
 
-* **Novas funcionalidades:**
-  *  Adição de identificador da bandeira.
+* **Correções:**
+  *  Corrige excesso de requisições para buscar bandeira de cartão no Checkout normal;
+  *  Corrige URL de webhooks quando o site possui Paths;
+  *  Corrige a reaplicação de máscara no checkout.
+
+= 3.4.4 (15/01/2025) =
+Você pode conferir essas atualizações aqui: [Github](https://github.com/pagarme/woocommerce/releases/tag/3.4.4)
+
+* **Correções:**
+  *  Corrige suporte para pagamentos de assinatura em Checkout Blocks;
+  *  Utilização das funções padrões do Woocommerce para retornar dados;
+  *  Padronização de nomenclatura de arquivo utilizando PSR-4;
+  *  Correção de tokenização de cartão quando utilizado autocomplete.
 
 * **Melhorias:**
-  *  Bandeira de Ticket;
-  *  Mudanças em relação ao processo de renovação ao plugin de Subscriptions.
-
-* **Correções:**
-  *  Problema ao importar JS de GooglePay.
-
-= 3.4.1 (03/10/2024) =
-Você pode conferir essas atualizações aqui: [Github](https://github.com/pagarme/woocommerce/releases/tag/3.4.1)
-
-* **Correções:**
-  *  Problema de sintax em versões de PHP 7.4.x ou menor.
+  *  Adicionando link para o pedido na Dashboard Pagar.me.
 
 == Upgrade Notice ==
 Agora é possível transacionar com Ticket
